@@ -1,0 +1,3510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>SOCIAL & PROFESSIONAL ISSUES PORTFOLIO</title>
+    <style>
+        .skills {
+            padding: 60px;
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 0 60px;
+            transition: all 0.5s ease;
+        }
+        .skills__desc {
+            flex: 3;
+            padding-right: 40px;
+            width: 70%;
+            transition: all 0.5s ease;
+        }
+        .skills__desc h3 {
+            font-size: 30px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .skills__desc .summary {
+            display: block;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .skills__desc .full {
+            display: none;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        .skills__desc.active {
+            flex: 1 1 100%;
+            width: 100%;
+        }
+        .skills__desc.active .summary {
+            display: none;
+        }
+        .skills__desc.active .full {
+            display: block;
+        }
+        .skills__stats {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 10px;
+            transition: all 0.5s ease;
+        }
+        .skills__stats i {
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            transition: transform 0.5s ease;
+        }
+        .skills__stats .skill__info {
+            grid-column: span 1;
+            background: #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            text-align: center;
+            transition: all 0.5s ease;
+        }
+        .skills__stats i:nth-child(1) {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+        }
+        .skills__stats .skill__info:nth-child(2) {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+        }
+        .skills__stats i:nth-child(3) {
+            grid-column: 3 / 4;
+            grid-row: 1 / 2;
+        }
+        .skills__stats .skill__info:nth-child(4) {
+            grid-column: 4 / 5;
+            grid-row: 1 / 2;
+        }
+        .skills__stats .skill__info:nth-child(5) {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+        }
+        .skills__stats i:nth-child(6) {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+        }
+        .skills__stats .skill__info:nth-child(7) {
+            grid-column: 3 / 4;
+            grid-row: 2 / 3;
+        }
+        .skills__stats i:nth-child(8) {
+            grid-column: 4 / 5;
+            grid-row: 2 / 3;
+        }
+        .skills__stats.active i {
+            transform: scale(1.1) rotate(5deg);
+        }
+        .skill__info h5 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .skill__info p {
+            font-size: 12px;
+            color: #7a7a7a;
+            font-weight: 500;
+            width: 100%;
+        }
+        .skills__desc.active + .skills__stats {
+            order: 2;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .skills.active {
+            flex-direction: column;
+        }
+        .skills__actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .skills__actions .btn {
+            padding: 6px 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+        .modal__content {
+            background: #fff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            animation: scaleIn 0.5s ease forwards;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            padding-bottom: 40px;
+        }
+        .modal__content::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 5px;
+            background: #1e3a8a;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .modal__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 20px 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .modal__header h3 {
+            font-size: 24px;
+            font-weight: 400;
+            color: #000;
+            margin: 0;
+        }
+        .modal__summary {
+            background: #e5e7eb;
+            padding: 15px 20px;
+            margin: 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+            text-align: justify;
+        }
+        .modal__full {
+            padding: 20px;
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        .modal__close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .modal__close:hover {
+            color: #1e3a8a;
+        }
+        .modal__wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .modal__wave svg {
+            position: absolute;
+            bottom: 0;
+            width: 200%;
+            height: 30px;
+            fill: #1e3a8a;
+            animation: wave 5s linear infinite;
+        }
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        /* Objectives Section Styles */
+        .objectives .category__desc p {
+            text-align: justify;
+        }
+        .objectives .project-card__image {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .objectives .project-card__image:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        /* Objectives Modal Styles */
+        .objectives-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .objectives-modal.active {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+        .objectives-modal__content {
+            background: #fff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 400px;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            animation: scaleIn 0.5s ease forwards;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .objectives-modal__content::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 5px;
+            background: #1e3a8a;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .objectives-modal__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .objectives-modal__header h3 {
+            font-size: 20px;
+            font-weight: 400;
+            color: #000;
+            margin: 0;
+        }
+        .objectives-modal__body {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            padding: 20px 20px 40px;
+            gap: 20px;
+        }
+        .objectives-modal__image {
+            width: 40%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .objectives-modal__info {
+            width: 60%;
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+            text-align: justify;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .objectives-modal__info h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0;
+            color: #1f2937;
+        }
+        .objectives-modal__info p.date {
+            font-style: italic;
+            font-size: 12px;
+            margin: 0;
+        }
+        .objectives-modal__info p:not(.date) {
+            margin: 0;
+            font-size: 13px;
+        }
+        .objectives-modal__close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .objectives-modal__close:hover {
+            color: #1e3a8a;
+        }
+        .objectives-modal__wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .objectives-modal__wave svg {
+            position: absolute;
+            bottom: 0;
+            width: 200%;
+            height: 30px;
+            fill: #1e3a8a;
+            animation: wave 5s linear infinite;
+        }
+        /* Reflection Section Styles */
+        .reflection {
+            padding: 60px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 0 60px;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeSlideIn 1s ease forwards;
+        }
+        .reflection__desc {
+            width: 100%;
+            transition: all 0.5s ease;
+        }
+        .reflection__desc h3 {
+            font-size: 30px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            text-align: left;
+            opacity: 0;
+            animation: fadeInText 0.8s ease forwards;
+            animation-delay: 0.2s;
+        }
+        .reflection__desc .summary {
+            display: block;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+            opacity: 0;
+            animation: fadeInText 0.8s ease forwards;
+            animation-delay: 0.4s;
+        }
+        .reflection__desc .full {
+            display: none;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInText 0.8s ease forwards;
+        }
+        .reflection__desc.active .summary {
+            display: none;
+        }
+        .reflection__desc.active .full {
+            display: block;
+        }
+        .reflection__images {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+            transition: margin-top 0.5s ease;
+        }
+        .reflection__desc.active + .reflection__images {
+            margin-top: 40px;
+        }
+        .reflection__images div {
+            position: relative;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: popIn 0.6s ease forwards;
+        }
+        .reflection__images div:nth-child(1) { animation-delay: 0.6s; }
+        .reflection__images div:nth-child(2) { animation-delay: 0.8s; }
+        .reflection__images div:nth-child(3) { animation-delay: 1.0s; }
+        .reflection__images img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .reflection__images img:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .reflection__images p {
+            text-align: center;
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+        .reflection__actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeInText 0.8s ease forwards;
+            animation-delay: 0.6s;
+        }
+        .reflection__actions .btn {
+            padding: 6px 20px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+        .reflection__actions .btn:hover {
+            transform: scale(1.05);
+        }
+        /* Reflection Modal Styles */
+        .reflection-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .reflection-modal.active {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+        .reflection-modal__content {
+            background: #fff;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 650px;
+            max-height: 85vh;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            animation: scaleIn 0.5s ease forwards;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            padding: 0;
+            overflow: hidden;
+        }
+        .reflection-modal__content::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        .reflection-modal__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+        .reflection-modal__header h3 {
+            font-size: 26px;
+            font-weight: 500;
+            color: #1f2937;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+        .reflection-modal__close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #6b7280;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .reflection-modal__close:hover {
+            color: #1e3a8a;
+            transform: rotate(90deg);
+        }
+        .reflection-modal__summary {
+            background: #f1f5f9;
+            padding: 15px 25px;
+            margin: 20px 25px 0;
+            border-radius: 6px;
+            font-size: 15px;
+            color: #4b5563;
+            line-height: 1.6;
+            text-align: justify;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        .reflection-modal__full {
+            padding: 25px;
+            font-size: 15px;
+            color: #4b5563;
+            line-height: 1.7;
+            text-align: justify;
+            background: #fff;
+        }
+        .reflection-modal__wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .reflection-modal__wave svg {
+            position: absolute;
+            bottom: 0;
+            width: 200%;
+            height: 30px;
+            fill: #1e3a8a;
+            animation: wave 6s linear infinite;
+        }
+        /* Reflection Image Modal Styles */
+        .reflection-image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .reflection-image-modal.active {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+        .reflection-image-modal__content {
+            background: #fff;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 400px;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            animation: scaleIn 0.5s ease forwards;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        .reflection-image-modal__content::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 5px;
+            background: #1e3a8a;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .reflection-image-modal__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .reflection-image-modal__header h3 {
+            font-size: 20px;
+            font-weight: 400;
+            color: #000;
+            margin: 0;
+        }
+        .reflection-image-modal__body {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            padding: 20px 20px 40px;
+            gap: 20px;
+        }
+        .reflection-image-modal__image {
+            width: 40%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .reflection-image-modal__info {
+            width: 60%;
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+            text-align: justify;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .reflection-image-modal__info h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0;
+            color: #1f2937;
+        }
+        .reflection-image-modal__info p.date {
+            font-style: italic;
+            font-size: 12px;
+            margin: 0;
+        }
+        .reflection-image-modal__info p:not(.date) {
+            margin: 0;
+            font-size: 13px;
+        }
+        .reflection-image-modal__close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .reflection-image-modal__close:hover {
+            color: #1e3a8a;
+        }
+        .reflection-image-modal__wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .reflection-image-modal__wave svg {
+            position: absolute;
+            bottom: 0;
+            width: 200%;
+            height: 30px;
+            fill: #1e3a8a;
+            animation: wave 5s linear infinite;
+        }
+        /* Animation Keyframes */
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @media screen and (max-width: 992px) {
+            .skills, .reflection {
+                padding: 60px 30px 80px;
+                margin: 0 30px;
+            }
+            .skills__desc {
+                padding-right: 0;
+                width: 100%;
+            }
+            .skills__desc.active + .skills__stats {
+                margin-top: 20px;
+            }
+            .skills__stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .reflection__images {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .objectives-modal__content,
+            .reflection-image-modal__content {
+                max-width: 600px;
+                max-height: 350px;
+            }
+            .objectives-modal__body,
+            .reflection-image-modal__body {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .objectives-modal__image,
+            .reflection-image-modal__image {
+                width: 100%;
+                max-height: 150px;
+            }
+            .objectives-modal__info,
+            .reflection-image-modal__info {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .skills, .reflection {
+                margin: 0 30px;
+            }
+            .skills__desc {
+                width: 100%;
+            }
+            .skills__stats {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(4, auto);
+            }
+            .skills__stats i:nth-child(1) {
+                grid-column: 1 / 2;
+                grid-row: 1 / 2;
+            }
+            .skills__stats .skill__info:nth-child(2) {
+                grid-column: 2 / 3;
+                grid-row: 1 / 2;
+            }
+            .skills__stats i:nth-child(3) {
+                grid-column: 1 / 2;
+                grid-row: 2 / 3;
+            }
+            .skills__stats .skill__info:nth-child(4) {
+                grid-column: 2 / 3;
+                grid-row: 2 / 3;
+            }
+            .skills__stats .skill__info:nth-child(5) {
+                grid-column: 1 / 2;
+                grid-row: 3 / 4;
+            }
+            .skills__stats i:nth-child(6) {
+                grid-column: 2 / 3;
+                grid-row: 3 / 4;
+            }
+            .skills__stats .skill__info:nth-child(7) {
+                grid-column: 1 / 2;
+                grid-row: 4 / 5;
+            }
+            .skills__stats i:nth-child(8) {
+                grid-column: 2 / 3;
+                grid-row: 4 / 5;
+            }
+            .skills__stats i {
+                font-size: 30px;
+            }
+            .skill__info h5 {
+                font-size: 16px;
+            }
+            .skill__info p {
+                font-size: 10px;
+            }
+            .reflection__images {
+                grid-template-columns: 1fr;
+            }
+            .objectives-modal__content,
+            .reflection-image-modal__content {
+                max-width: 90%;
+                max-height: 500px;
+            }
+        }
+        /* Showcase, Objectives, and Reflection Margin Styles */
+        .showcase, .objectives, .reflection {
+            margin: 60px;
+        }
+        @media screen and (max-width: 992px) {
+            .showcase, .objectives, .reflection {
+                margin: 30px;
+            }
+        }
+        /* Case Study Section Styles */
+.case-study {
+    padding: 60px;
+    background: linear-gradient(180deg, #ffffff, #f9fafb);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin: 60px;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: slideUp 1s ease forwards;
+    animation-delay: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.case-study::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.1), transparent 70%);
+    z-index: -1;
+}
+
+.case-study__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 15px;
+}
+
+.case-study__header h3 {
+    font-size: 32px;
+    font-weight: 500;
+    color: #1f2937;
+    position: relative;
+    padding-left: 15px;
+}
+
+.case-study__header h3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background: linear-gradient(180deg, #1e3a8a, #3b82f6);
+    border-radius: 2px;
+}
+
+.case-study__header .btn {
+    padding: 10px 25px;
+    font-size: 14px;
+    background: #1e3a8a;
+    color: #fff;
+    border-radius: 25px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.case-study__header .btn:hover {
+    background: #3b82f6;
+    transform: translateY(-3px);
+}
+
+.case-study__desc {
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.5s ease;
+}
+
+.case-study__desc .summary {
+    display: block;
+    color: #4b5563;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    text-align: justify;
+    opacity: 0;
+    animation: fadeInText 0.8s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.case-study__desc .full {
+    display: none;
+    color: #4b5563;
+    font-size: 15px;
+    line-height: 1.7;
+    text-align: justify;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeInText 0.8s ease forwards;
+}
+
+.case-study__desc .full strong {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.case-study__desc.active .summary {
+    display: none;
+}
+
+.case-study__desc.active .full {
+    display: block;
+}
+
+.case-study__actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeInText 0.8s ease forwards;
+    animation-delay: 0.7s;
+}
+
+.case-study__actions .btn {
+    padding: 10px 30px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.case-study__actions .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.case-study__actions .btn--secondary {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.case-study__actions .btn--secondary:hover {
+    background: #d1d5db;
+}
+
+.case-study__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 40px;
+    transition: margin-top 0.5s ease;
+}
+
+.case-study__desc.active + .case-study__cards {
+    margin-top: 50px;
+}
+
+.case-study-card {
+    position: relative;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    opacity: 0;
+    animation: popIn 0.7s ease forwards;
+}
+
+.case-study-card:nth-child(1) { animation-delay: 0.9s; }
+.case-study-card:nth-child(2) { animation-delay: 1.1s; }
+.case-study-card:nth-child(3) { animation-delay: 1.3s; }
+
+.case-study-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.case-study-card__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.case-study-card__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.case-study-card:hover .case-study-card__image {
+    transform: scale(1.15);
+}
+
+.case-study-card__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(30, 58, 138, 0.6), rgba(59, 130, 246, 0.4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.case-study-card:hover .case-study-card__overlay {
+    opacity: 1;
+}
+
+.case-study-card__overlay i {
+    font-size: 36px;
+    color: #fff;
+    transform: rotate(0deg) scale(0);
+    transition: transform 0.4s ease;
+}
+
+.case-study-card:hover .case-study-card__overlay i {
+    transform: rotate(360deg) scale(1);
+}
+
+.case-study-card__info {
+    padding: 20px;
+    text-align: center;
+}
+
+.case-study-card__info h5 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.case-study-card__info p {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 5px 0;
+}
+
+.case-study-card__desc {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.case-study-card .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 13px;
+    border-radius: 0 0 12px 12px;
+    background: #1e3a8a;
+    color: #fff;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.case-study-card .btn:hover {
+    background: #3b82f6;
+    transform: translateY(-2px);
+}
+
+/* Case Study Modal Styles */
+.case-study-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.case-study-modal.active {
+    display: flex;
+    animation: fadeIn 0.6s ease;
+}
+
+.case-study-modal__content {
+    background: #fff;
+    border-radius: 14px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    position: relative;
+    transform: scale(0.7);
+    opacity: 0;
+    animation: scaleIn 0.6s ease forwards;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+}
+
+.case-study-modal__content::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+
+.case-study-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 30px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.case-study-modal__header h3 {
+    font-size: 28px;
+    font-weight: 500;
+    color: #1f2937;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.case-study-modal__close {
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.case-study-modal__close:hover {
+    color: #1e3a8a;
+    transform: rotate(180deg);
+}
+
+.case-study-modal__summary {
+    background: #f1f5f9;
+    padding: 20px 30px;
+    margin: 25px 30px 0;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.7;
+    text-align: justify;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.case-study-modal__full {
+    padding: 30px;
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.8;
+    text-align: justify;
+    background: #fff;
+}
+
+.case-study-modal__full strong {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.case-study-modal__full ul {
+    list-style-type: disc;
+    margin: 15px 0;
+    padding-left: 25px;
+}
+
+.case-study-modal__full ul li {
+    margin-bottom: 10px;
+}
+
+.case-study-modal__wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.case-study-modal__wave svg {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 40px;
+    fill: #1e3a8a;
+    animation: wave 7s linear infinite;
+}
+
+/* Case Study Card Modal Styles */
+.case-study-card-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.case-study-card-modal.active {
+    display: flex;
+    animation: fadeIn 0.6s ease;
+}
+
+.case-study-card-modal__content {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 850px;
+    max-height: 500px;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.7);
+    opacity: 0;
+    animation: scaleIn 0.6s ease forwards;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+}
+
+.case-study-card-modal__content::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.case-study-card-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.case-study-card-modal__header h3 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #1f2937;
+    margin: 0;
+}
+
+.case-study-card-modal__body {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    padding: 25px;
+    gap: 25px;
+}
+
+.case-study-card-modal__image {
+    width: 40%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.case-study-card-modal__image:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.case-study-card-modal__info {
+    width: 60%;
+    background: #f1f5f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+    color: #4b5563;
+    line-height: 1.7;
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.case-study-card-modal__info h3 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+    color: #1f2937;
+}
+
+.case-study-card-modal__info p.date {
+    font-style: italic;
+    font-size: 13px;
+    margin: 0;
+}
+
+.case-study-card-modal__info p:not(.date) {
+    margin: 0;
+    font-size: 14px;
+}
+
+.case-study-card-modal__close {
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.case-study-card-modal__close:hover {
+    color: #1e3a8a;
+    transform: rotate(180deg);
+}
+
+.case-study-card-modal__wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.case-study-card-modal__wave svg {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 40px;
+    fill: #1e3a8a;
+    animation: wave 6s linear infinite;
+}
+
+/* New Animation Keyframes */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 992px) {
+    .case-study {
+        padding: 50px 25px;
+        margin: 30px;
+    }
+    .case-study__cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .case-study-card-modal__content {
+        max-width: 650px;
+        max-height: 450px;
+    }
+    .case-study-card-modal__body {
+        flex-direction: column;
+        padding: 20px;
+    }
+    .case-study-card-modal__image {
+        width: 100%;
+        max-height: 200px;
+    }
+    .case-study-card-modal__info {
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .case-study__cards {
+        grid-template-columns: 1fr;
+    }
+    .case-study-card-modal__content {
+        max-width: 90%;
+        max-height: 550px;
+    }
+    .case-study__header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    .case-study__header .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Visuals Section Styles */
+.visuals {
+    padding: 60px;
+    background: linear-gradient(180deg, #f9fafb, #ffffff);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin: 60px;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: slideUp 1s ease forwards;
+    animation-delay: 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.visuals::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 70%);
+    z-index: -1;
+}
+
+.visuals__header {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.visuals__header h3 {
+    font-size: 32px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+}
+
+.visuals__header h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    border-radius: 2px;
+}
+
+.visuals__header p {
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeInText 0.8s ease forwards;
+    animation-delay: 0.6s;
+}
+
+.visuals__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+.visuals__item {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    opacity: 0;
+    animation: popIn 0.7s ease forwards;
+}
+
+.visuals__item:nth-child(1) { animation-delay: 0.8s; }
+.visuals__item:nth-child(2) { animation-delay: 1.0s; }
+.visuals__item:nth-child(3) { animation-delay: 1.2s; }
+.visuals__item:nth-child(4) { animation-delay: 1.4s; }
+
+.visuals__item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.visuals__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.visuals__image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.visuals__item:hover .visuals__image {
+    transform: scale(1.1);
+}
+
+.visuals__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.visuals__item:hover .visuals__overlay {
+    opacity: 1;
+}
+
+.visuals__overlay i {
+    font-size: 30px;
+    color: #fff;
+    transform: scale(0);
+    transition: transform 0.4s ease;
+}
+
+.visuals__item:hover .visuals__overlay i {
+    transform: scale(1);
+}
+
+.visuals__image-wrapper--blue .visuals__overlay {
+    background: linear-gradient(180deg, rgba(30, 58, 138, 0.6), rgba(59, 130, 246, 0.4));
+}
+
+.visuals__image-wrapper--purple .visuals__overlay {
+    background: linear-gradient(180deg, rgba(107, 33, 168, 0.6), rgba(139, 92, 246, 0.4));
+}
+
+.visuals__image-wrapper--green .visuals__overlay {
+    background: linear-gradient(180deg, rgba(21, 128, 61, 0.6), rgba(74, 222, 128, 0.4));
+}
+
+.visuals__image-wrapper--orange .visuals__overlay {
+    background: linear-gradient(180deg, rgba(154, 52, 18, 0.6), rgba(249, 115, 22, 0.4));
+}
+
+.visuals__info {
+    padding: 15px;
+    text-align: center;
+}
+
+.visuals__info h5 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.visuals__info p {
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Visuals Modal Styles */
+.visuals-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.visuals-modal.active {
+    display: flex;
+    animation: fadeIn 0.6s ease;
+}
+
+.visuals-modal__content {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 450px;
+    position: relative;
+    transform: scale(0.7);
+    opacity: 0;
+    animation: scaleIn 0.6s ease forwards;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    overflow-y: auto;
+}
+
+.visuals-modal__content::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.visuals-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.visuals-modal__header h3 {
+    font-size: 22px;
+    font-weight: 500;
+    color: #1f2937;
+    margin: 0;
+}
+
+.visuals-modal__close {
+    background: none;
+    border: none;
+    font-size: 26px;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.visuals-modal__close:hover {
+    color: #1e3a8a;
+    transform: rotate(180deg);
+}
+
+.visuals-modal__body {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 25px;
+    gap: 20px;
+}
+
+.visuals-modal__image {
+    width: 40%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.4s ease;
+}
+
+.visuals-modal__image:hover {
+    transform: scale(1.05);
+}
+
+.visuals-modal__info {
+    width: 60%;
+    padding: 15px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.visuals-modal__info h4 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.visuals-modal__info p {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.7;
+    text-align: justify;
+    margin: 0;
+}
+
+.visuals-modal__wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.visuals-modal__wave svg {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 30px;
+    fill: #1e3a8a;
+    animation: wave 5s linear infinite;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 992px) {
+    .visuals {
+        padding: 50px 25px;
+        margin: 30px;
+    }
+    .visuals__container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .visuals-modal__body {
+        flex-direction: column;
+        padding: 15px;
+    }
+    .visuals-modal__image {
+        width: 100%;
+        max-height: 200px;
+    }
+    .visuals-modal__info {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .visuals__container {
+        grid-template-columns: 1fr;
+    }
+    .visuals-modal__content {
+        max-width: 90%;
+        max-height: 500px;
+    }
+}
+
+/* Ethics Pledge Section Styles */
+.ethics-pledge {
+    padding: 80px 60px;
+    background: linear-gradient(180deg, #ffffff, #f1f5f9);
+    border-radius: 16px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+    margin: 60px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(60px);
+    animation: slideUp 1.2s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.ethics-pledge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.15), transparent 70%);
+    z-index: -1;
+}
+
+.ethics-pledge__header {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.ethics-pledge__header h3 {
+    font-size: 36px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    opacity: 0;
+    animation: fadeInText 0.8s ease forwards;
+    animation-delay: 0.7s;
+}
+
+.ethics-pledge__header h3::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+}
+
+.ethics-pledge__header:hover h3::after {
+    width: 120px;
+}
+
+.ethics-pledge__header p {
+    font-size: 16px;
+    color: #4b5563;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeInText 0.8s ease forwards;
+    animation-delay: 0.9s;
+}
+
+.ethics-pledge__seal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+    opacity: 0.2;
+    transition: opacity 0.3s ease, transform 0.5s ease;
+    animation: pulseSeal 3s ease-in-out infinite;
+}
+
+.ethics-pledge__header:hover .ethics-pledge__seal {
+    opacity: 0.5;
+    transform: scale(1.1);
+}
+
+.seal-icon {
+    width: 100%;
+    height: 100%;
+    transform: rotate(0deg);
+    transition: transform 0.5s ease;
+}
+
+.ethics-pledge__header:hover .seal-icon {
+    transform: rotate(360deg);
+}
+
+.ethics-pledge__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.ethics-pledge__card {
+    perspective: 1000px;
+    height: 300px;
+    opacity: 0;
+    animation: popIn 0.8s ease forwards;
+}
+
+.ethics-pledge__card:nth-child(1) { animation-delay: 1.1s; }
+.ethics-pledge__card:nth-child(2) { animation-delay: 1.3s; }
+.ethics-pledge__card:nth-child(3) { animation-delay: 1.5s; }
+.ethics-pledge__card:nth-child(4) { animation-delay: 1.7s; }
+.ethics-pledge__card:nth-child(5) { animation-delay: 1.9s; }
+.ethics-pledge__card:nth-child(6) { animation-delay: 2.1s; }
+
+.ethics-pledge__card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s ease-in-out;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+}
+
+.ethics-pledge__card:hover .ethics-pledge__card-inner {
+    transform: rotateY(180deg);
+}
+
+.ethics-pledge__card-front,
+.ethics-pledge__card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.ethics-pledge__card-front::before,
+.ethics-pledge__card-back::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
+    z-index: -1;
+}
+
+.ethics-pledge__card-back {
+    transform: rotateY(180deg);
+    background: #f9fafb;
+}
+
+.ethics-pledge__card h4 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 15px;
+}
+
+.ethics-pledge__card p {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.7;
+    opacity: 0;
+    animation: textReveal 1s ease forwards;
+    animation-delay: 0.2s;
+}
+
+.ethics-pledge__icons {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.ethics-pledge__icon {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    opacity: 0;
+    animation: popIn 0.7s ease forwards;
+}
+
+.ethics-pledge__icon:nth-child(1) { animation-delay: 2.3s; }
+.ethics-pledge__icon:nth-child(2) { animation-delay: 2.5s; }
+.ethics-pledge__icon:nth-child(3) { animation-delay: 2.7s; }
+.ethics-pledge__icon:nth-child(4) { animation-delay: 2.9s; }
+.ethics-pledge__icon:nth-child(5) { animation-delay: 3.1s; }
+.ethics-pledge__icon:nth-child(6) { animation-delay: 3.3s; }
+
+.ethics-pledge__icon:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.ethics-pledge__icon i {
+    font-size: 32px;
+    color: #3b82f6;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.ethics-pledge__icon:hover i {
+    transform: scale(1.2);
+}
+
+.ethics-pledge__icon p {
+    font-size: 13px;
+    color: #1f2937;
+    font-weight: 500;
+}
+
+/* Ethics Pledge Modal Styles */
+.ethics-pledge-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.ethics-pledge-modal.active {
+    display: flex;
+    animation: fadeIn 0.6s ease;
+}
+
+.ethics-pledge-modal__content {
+    background: #fff;
+    border-radius: 14px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 500px;
+    position: relative;
+    transform: scale(0.7);
+    opacity: 0;
+    animation: scaleIn 0.6s ease forwards;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+}
+
+.ethics-pledge-modal__content::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+
+.ethics-pledge-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.ethics-pledge-modal__header h3 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #1f2937;
+    margin: 0;
+}
+
+.ethics-pledge-modal__close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.ethics-pledge-modal__close:hover {
+    color: #1e3a8a;
+    transform: rotate(360deg);
+}
+
+.ethics-pledge-modal__body {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    gap: 20px;
+}
+
+.ethics-pledge-modal__icon {
+    font-size: 48px;
+    color: #3b82f6;
+    align-self: center;
+    animation: pulseIcon 2s ease-in-out infinite;
+}
+
+.ethics-pledge-modal__info {
+    background: #f1f5f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ethics-pledge-modal__info h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.ethics-pledge-modal__info p {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.7;
+    text-align: justify;
+    margin: 0;
+}
+
+.ethics-pledge-modal__wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.ethics-pledge-modal__wave svg {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 40px;
+    fill: #1e3a8a;
+    animation: wave 6s linear infinite;
+}
+
+/* New Animation Keyframes */
+@keyframes textReveal {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseSeal {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pulseIcon {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 992px) {
+    .ethics-pledge {
+        padding: 60px 30px;
+        margin: 30px;
+    }
+    .ethics-pledge__cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .ethics-pledge__icons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .ethics-pledge-modal__content {
+        max-width: 600px;
+        max-height: 450px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .ethics-pledge__cards {
+        grid-template-columns: 1fr;
+    }
+    .ethics-pledge__icons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .ethics-pledge-modal__content {
+        max-width: 90%;
+        max-height: 500px;
+    }
+    .ethics-pledge__header {
+        padding: 0 20px;
+    }
+}
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const seeMoreBtn = document.querySelector('.skills__actions .btn--secondary');
+            const learnMoreBtn = document.querySelector('.skills__actions .btn');
+            const modal = document.querySelector('.modal');
+            const closeModalBtn = document.querySelector('.modal__close');
+            const skillsSection = document.querySelector('.skills');
+            const skillsDesc = document.querySelector('.skills__desc');
+            const skillsStats = document.querySelector('.skills__stats');
+
+            seeMoreBtn.addEventListener('click', () => {
+                skillsDesc.classList.toggle('active');
+                skillsSection.classList.toggle('active');
+                skillsStats.classList.toggle('active');
+                seeMoreBtn.textContent = skillsDesc.classList.contains('active') ? 'See Less' : 'See More';
+            });
+
+            learnMoreBtn.addEventListener('click', () => {
+                modal.classList.add('active');
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+
+            // Objectives Modal Functionality
+            const objectivesModal = document.querySelector('.objectives-modal');
+            const objectivesCloseBtn = document.querySelector('.objectives-modal__close');
+            const projectCards = document.querySelectorAll('.objectives .project-card');
+            const reflectionImageModals = document.querySelectorAll('.reflection-image-modal');
+            const reflectionModal = document.querySelector('.reflection-modal');
+
+            projectCards.forEach((card) => {
+                const button = card.querySelector('.btn');
+                button.addEventListener('click', () => {
+                    reflectionImageModals.forEach(modal => modal.classList.remove('active'));
+                    reflectionModal.classList.remove('active');
+                    modal.classList.remove('active');
+
+                    const image = card.querySelector('.project-card__image').src;
+                    const title = card.querySelector('.project-card__info h5').textContent;
+                    const date = card.querySelector('.project-card__info p').textContent;
+                    const desc = card.querySelector('.project-card__desc').textContent;
+
+                    const modalImage = objectivesModal.querySelector('.objectives-modal__image');
+                    const modalTitle = objectivesModal.querySelector('.objectives-modal__info h3');
+                    const modalDate = objectivesModal.querySelector('.objectives-modal__info .date');
+                    const modalDesc = objectivesModal.querySelector('.objectives-modal__info p:not(.date)');
+
+                    modalImage.src = image;
+                    modalTitle.textContent = title;
+                    modalDate.textContent = date;
+                    modalDesc.textContent = desc;
+
+                    objectivesModal.classList.add('active');
+                });
+            });
+
+            objectivesCloseBtn.addEventListener('click', () => {
+                objectivesModal.classList.remove('active');
+            });
+
+            objectivesModal.addEventListener('click', (e) => {
+                if (e.target === objectivesModal) {
+                    objectivesModal.classList.remove('active');
+                }
+            });
+
+            // Reflection Modal Functionality
+            const reflectionSeeMoreBtn = document.querySelector('.reflection__actions .btn--secondary');
+            const reflectionLearnMoreBtn = document.querySelector('.reflection__actions .btn');
+            const reflectionCloseBtn = document.querySelector('.reflection-modal__close');
+            const reflectionDesc = document.querySelector('.reflection__desc');
+
+            reflectionSeeMoreBtn.addEventListener('click', () => {
+                reflectionDesc.classList.toggle('active');
+                reflectionSeeMoreBtn.textContent = reflectionDesc.classList.contains('active') ? 'See Less' : 'See More';
+            });
+
+            reflectionLearnMoreBtn.addEventListener('click', () => {
+                reflectionModal.classList.add('active');
+            });
+
+            reflectionCloseBtn.addEventListener('click', () => {
+                reflectionModal.classList.remove('active');
+            });
+
+            reflectionModal.addEventListener('click', (e) => {
+                if (e.target === reflectionModal) {
+                    reflectionModal.classList.remove('active');
+                }
+            });
+
+            // Reflection Image Modal Functionality
+            const reflectionImages = document.querySelectorAll('.reflection__images div');
+
+            reflectionImages.forEach((imageDiv) => {
+                imageDiv.addEventListener('click', () => {
+                    // Close all modals to prevent overlap
+                    reflectionImageModals.forEach(modal => modal.classList.remove('active'));
+                    objectivesModal.classList.remove('active');
+                    modal.classList.remove('active');
+                    reflectionModal.classList.remove('active');
+
+                    const modalId = imageDiv.getAttribute('data-modal-id');
+                    const targetModal = document.querySelector(`.reflection-image-modal[data-modal-id="${modalId}"]`);
+
+                    if (!targetModal) {
+                        console.error(`Modal with data-modal-id="${modalId}" not found`);
+                        return;
+                    }
+
+                    const image = imageDiv.querySelector('img').src;
+                    const title = imageDiv.querySelector('p').textContent;
+                    const modalImage = targetModal.querySelector('.reflection-image-modal__image');
+                    const modalHeaderTitle = targetModal.querySelector('.reflection-image-modal__header h3');
+                    const modalInfoTitle = targetModal.querySelector('.reflection-image-modal__info h3');
+                    const modalDesc = targetModal.querySelector('.reflection-image-modal__info p:not(.date)');
+                    const modalDate = targetModal.querySelector('.reflection-image-modal__info .date');
+
+                    modalImage.src = image;
+                    modalImage.alt = title;
+                    modalHeaderTitle.textContent = title;
+                    modalInfoTitle.textContent = `${title} Reflections`;
+                    modalDesc.textContent = modalDesc.dataset.desc || 'No description available.';
+                    modalDate.textContent = 'August 2023'; // Consistent date as per original HTML
+
+                    targetModal.classList.add('active');
+                });
+            });
+
+         // Case Study Modal Functionality
+const caseStudyModal = document.querySelector('.case-study-modal');
+const caseStudyCloseBtn = document.querySelector('.case-study-modal__close');
+const caseStudySeeMoreBtn = document.querySelector('.case-study__actions .btn--secondary');
+const caseStudyLearnMoreBtn = document.querySelector('.case-study__actions .btn');
+const caseStudyDesc = document.querySelector('.case-study__desc');
+const caseStudyCards = document.querySelectorAll('.case-study-card');
+const caseStudyCardModals = document.querySelectorAll('.case-study-card-modal');
+
+caseStudySeeMoreBtn.addEventListener('click', () => {
+    caseStudyDesc.classList.toggle('active');
+    caseStudySeeMoreBtn.textContent = caseStudyDesc.classList.contains('active') ? 'See Less' : 'See More';
+});
+
+caseStudyLearnMoreBtn.addEventListener('click', () => {
+    caseStudyModal.classList.add('active');
+});
+
+caseStudyCloseBtn.addEventListener('click', () => {
+    caseStudyModal.classList.remove('active');
+});
+
+caseStudyModal.addEventListener('click', (e) => {
+    if (e.target === caseStudyModal) {
+        caseStudyModal.classList.remove('active');
+    }
+});
+
+// Case Study Card Modal Functionality
+caseStudyCards.forEach((card) => {
+    const button = card.querySelector('.btn');
+    button.addEventListener('click', () => {
+        // Close all other modals to prevent overlap
+        caseStudyCardModals.forEach(modal => modal.classList.remove('active'));
+        caseStudyModal.classList.remove('active');
+        modal.classList.remove('active');
+        objectivesModal.classList.remove('active');
+        reflectionModal.classList.remove('active');
+        reflectionImageModals.forEach(modal => modal.classList.remove('active'));
+
+        const modalId = card.getAttribute('data-modal-id');
+        const targetModal = document.querySelector(`.case-study-card-modal[data-modal-id="${modalId}"]`);
+
+        if (!targetModal) {
+            console.error(`Modal with data-modal-id="${modalId}" not found`);
+            return;
+        }
+
+        const image = card.querySelector('.case-study-card__image').src;
+        const title = card.querySelector('.case-study-card__info h5').textContent;
+        const date = card.querySelector('.case-study-card__info p').textContent;
+        const desc = card.querySelector('.case-study-card__desc').textContent;
+
+        const modalImage = targetModal.querySelector('.case-study-card-modal__image');
+        const modalHeaderTitle = targetModal.querySelector('.case-study-card-modal__header h3');
+        const modalInfoTitle = targetModal.querySelector('.case-study-card-modal__info h3');
+        const modalDesc = targetModal.querySelector('.case-study-card-modal__info p:not(.date)');
+        const modalDate = targetModal.querySelector('.case-study-card-modal__info .date');
+
+        modalImage.src = image;
+        modalImage.alt = title;
+        modalHeaderTitle.textContent = title;
+        modalInfoTitle.textContent = `${title} Analysis`;
+        modalDesc.textContent = modalDesc.dataset.desc || desc;
+        modalDate.textContent = date;
+
+        targetModal.classList.add('active');
+    });
+});
+
+// Close functionality for all case study card modals
+caseStudyCardModals.forEach(modal => {
+    const closeBtn = modal.querySelector('.case-study-card-modal__close');
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+});
+
+// Visuals Modal Functionality
+const visualsItems = document.querySelectorAll('.visuals__item');
+const visualsModals = document.querySelectorAll('.visuals-modal');
+
+visualsItems.forEach((item) => {
+    item.addEventListener('click', () => {
+        // Close all other modals to prevent overlap
+        visualsModals.forEach(modal => modal.classList.remove('active'));
+        caseStudyCardModals.forEach(modal => modal.classList.remove('active'));
+        caseStudyModal.classList.remove('active');
+        modal.classList.remove('active');
+        objectivesModal.classList.remove('active');
+        reflectionModal.classList.remove('active');
+        reflectionImageModals.forEach(modal => modal.classList.remove('active'));
+
+        const modalId = item.getAttribute('data-modal-id');
+        const targetModal = document.querySelector(`.visuals-modal[data-modal-id="${modalId}"]`);
+
+        if (!targetModal) {
+            console.error(`Modal with data-modal-id="${modalId}" not found`);
+            return;
+        }
+
+        const image = item.querySelector('.visuals__image').src;
+        const title = item.querySelector('.visuals__info h5').textContent;
+        const desc = item.querySelector('.visuals__info p').textContent;
+
+        const modalImage = targetModal.querySelector('.visuals-modal__image');
+        const modalHeaderTitle = targetModal.querySelector('.visuals-modal__header h3');
+        const modalInfoTitle = targetModal.querySelector('.visuals-modal__info h4');
+        const modalDesc = targetModal.querySelector('.visuals-modal__info p');
+
+        modalImage.src = image;
+        modalImage.alt = title;
+        modalHeaderTitle.textContent = title;
+        modalInfoTitle.textContent = title;
+        modalDesc.textContent = modalDesc.textContent; // Uses predefined modal description
+
+        targetModal.classList.add('active');
+    });
+});
+
+// Close functionality for all visuals modals
+visualsModals.forEach(modal => {
+    const closeBtn = modal.querySelector('.visuals-modal__close');
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+});
+
+            // Close functionality for all reflection image modals
+            reflectionImageModals.forEach(modal => {
+                const closeBtn = modal.querySelector('.reflection-image-modal__close');
+                closeBtn.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                });
+
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+
+
+
+
+        // Ethics Pledge Modal Functionality
+const ethicsPledgeIcons = document.querySelectorAll('.ethics-pledge__icon');
+const ethicsPledgeModals = document.querySelectorAll('.ethics-pledge-modal');
+
+ethicsPledgeIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+        // Close all other modals to prevent overlap
+        ethicsPledgeModals.forEach(modal => modal.classList.remove('active'));
+        visualsModals.forEach(modal => modal.classList.remove('active'));
+        caseStudyCardModals.forEach(modal => modal.classList.remove('active'));
+        caseStudyModal.classList.remove('active');
+        modal.classList.remove('active');
+        objectivesModal.classList.remove('active');
+        reflectionModal.classList.remove('active');
+        reflectionModalIcons.forEach(modModal => modModal.classList.remove('active'));
+
+        const modalId = icon.getAttribute('data-modal-id');
+        const targetModal = document.querySelector(`.ethics-pledge-modal[data-modal-id="${modalId}"]`);
+
+        if (!targetModal) {
+            console.error(`Modal with data-modal-id="${modalId}" not found`);
+            return;
+        }
+
+        targetModal.classList.add('active');
+    });
+});
+
+// Close functionality for Ethics Pledge modals
+ethicsPledgeModals.forEach(modal => {
+    const closeBtn = modal.querySelector('.ethics-pledge-modal__close');
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+});
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="navbar__logo"><i class="ri-code-s-slash-line"></i> SPI.</a>
+        <div class="navbar__menu">
+            <a href="#" class="navbar__link">INTRODUCTION</a>
+            <a href="#" class="navbar__link">OBJECTIVES</a>
+            <a href="#" class="navbar__link">REFLECTION</a>
+            <a href="#" class="navbar__link">CASE STUDY</a>
+            <a href="#" class="navbar__link">PROFESSIONAL ETHICS PLEDGE</a>
+        </div>
+        <div class="navbar__actions">
+            <div class="navbar__location">
+                <h5>Philippines, Tarlac</h5>
+                <p>6:18:31 pm</p>
+            </div>
+            <button class="btn">Get a Quote</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero__content">
+            <img src="photos/img.jpg" alt="Profile Image" class="hero__image">
+            <h2>WELCOME TO SOCIAL ISSUES PORTFOLIO</h2>
+        </div>
+        <div class="hero__intro">
+            <h3>SOCIAL AND PROFESSIONAL ISSUES</h3>
+            <p>Explore an interactive showcase of IT ethics in action, featuring analyses of real-world incidents and a personal pledge to uphold professional standards.</p>
+            <div class="hero__actions">
+                <button class="btn">EXPLORE SOCIAL ISSUES</button>
+                <button class="btn btn--secondary">SEE MORE ABOUT THE PORTFOLIO</button>
+            </div>
+        </div>
+        <div class="hero__socials">
+            <a href="#"><i class="ri-instagram-line"></i></a>
+            <a href="#"><i class="ri-dribbble-line"></i></a>
+            <a href="#"><i class="ri-linkedin-box-line"></i></a>
+            <a href="#"><i class="ri-youtube-line"></i></a>
+        </div>
+    </section>
+
+    <section class="skills">
+        <div class="skills__desc">
+            <h3>Introduction</h3>
+            <p class="summary">You're here, so you probably already know I’m not exactly one for keeping things confined to a textbook. My world's built on innovation, on pushing boundaries, on making the impossible… well, possible. So, when I first encountered the realm of "Social and Professional Issues in Information Technology," I'll admit, my initial assessment was probably along the lines of "more theory, less practical application."</p>
+            <p class="full">You're here, so you probably already know I’m not exactly one for keeping things confined to a textbook. My world's built on innovation, on pushing boundaries, on making the impossible… well, possible. So, when I first encountered the realm of "Social and Professional Issues in Information Technology," I'll admit, my initial assessment was probably along the lines of "more theory, less practical application." My mind, frankly, was preoccupied with circuits, algorithms, and the pure, exhilarating challenge of building things that change the game. I anticipated a minor diversion, a required pit stop in the grand race of technological advancement. It was quite the revelation, then, to discover this wasn't just a side quest; it was a fundamental pillar. This realization wasn't just academic; it prompted a deeper dive, showing me that the most powerful tech demands the most profound ethical consideration.</p>
+            <p class="full">As I began to truly engage with the material, the initial detachment quickly dissolved, replaced by a growing sense of the immense stakes involved. Concepts that once felt distant became incredibly palpable, especially when dissecting the nuances of data privacy. We live in a digital age where sharing personal information is practically a reflex, often without truly understanding the implications. Grasping "informational privacy" – the inherent right to control your own data – wasn't just a concept; it became a personal conviction. It forced me to see how advancements like data mining and facial recognition, while undeniably powerful, present a critical ethical tightrope: are we using data ethically, or are we just collecting it because we can? Real-world examples, like the COMELEC or PhilHealth data breaches right here in the Philippines, weren't just news items; they were stark reminders that this isn't abstract theory. This is the very real, often vulnerable, fabric the fabric of people's lives we're dealing with.</p>
+            <p class="full">What truly resonated was that the inescapable system of law that underpins all the technology. It was a major shift for me from “what’s right” to “what’s legal and what are the consequences if you’re not careful about it.” Understanding Intellectual Property Law and Cyber Libel moved me away from academic debates to concrete liabilities. Copying software isn’t just a vague ethical misstep; it’s a direct infringement, a violation of actual legal statutes that carry real penalties. Similarly, realizing that even a seemingly innocuous online comment can quickly escalate into a legal quagmire like cyber libel underscored the immense responsibility that comes with working in this digital arena. These insights transformed my perspective entirely. This isn’t merely an “ethics class”; it’s an essential manual for navigating the complex digital world responsibly, legally, and with a clear conscience. And believe me, whether you’re building global systems or just posting online regularly, having that roadmap is absolutely indispensable.</p>
+            <div class="skills__actions">
+                <button class="btn">Learn More</button>
+                <button class="btn btn--secondary">See More</button>
+            </div>
+        </div>
+        <div class="skills__stats">
+            <i class="ri-codepen-line"></i>
+            <div class="skill__info">
+                <h5>40+</h5>
+                <p>JavaScript Projects</p>
+            </div>
+            <i class="ri-reactjs-line"></i>
+            <div class="skill__info">
+                <h5>12+</h5>
+                <p>Remote Projects</p>
+            </div>
+            <div class="skill__info">
+                <h5>50+</h5>
+                <p>Codepen Projects</p>
+            </div>
+            <i class="ri-rocket-line"></i>
+            <div class="skill__info">
+                <h5>20+</h5>
+                <p>React Projects</p>
+            </div>
+            <i class="ri-remote-control-line"></i>
+        </div>
+    </section>
+
+    <section class="objectives">
+        <div class="showcase__header">
+            <h3>Objectives</h3>
+            <button class="btn">SEE MORE</button>
+        </div>
+        <div class="showcase_categories">
+            <section class="category">
+                <div class="category__header">
+                    <div class="category__title">
+                        <i class="ri-macbook-line"></i>
+                        <h4>PORTFOLIO OBJECTIVES</h4>
+                    </div>
+                    <div class="category__desc">
+                        <p>This portfolio aims to demonstrate a solid understanding of social, ethical, and professional issues in Information Technology, showcasing the ability to analyze ethical theories, apply computer ethics principles, understand privacy rights and relevant laws like the Data Privacy Act, comprehend intellectual property for computer programs, and recognize issues such as cyber libel.</p>
+                        <a href="#"><i class="ri-share-circle-line"></i></a>
+                    </div>
+                </div>
+                <div class="category__projects">
+                    <div class="project-card" data-modal-id="1">
+                        <img src="photos/obj1.jpg" alt="Portfolio 1" class="project-card__image">
+                        <div class="project-card__info">
+                            <h5>Ethical Frameworks and Decision-Making</h5>
+                            <p>August 2023</p>
+                        </div>
+                        <p class="project-card__desc">Visualizes & convey the analytical process of applying ethical theories to complex digital dilemmas is a key objective.</p>
+                        <button class="btn">View</button>
+                    </div>
+                    <div class="project-card" data-modal-id="2">
+                        <img src="photos/img2.jpg" alt="Portfolio 2" class="project-card__image">
+                        <div class="project-card__info">
+                            <h5>Data Privacy & Rights</h5>
+                            <p>August 2023</p>
+                        </div>
+                        <p class="project-card__desc">Illustrate the vital importance of safeguarding personal information and adhering to robust privacy laws is a core objective.</p>
+                        <button class="btn">View</button>
+                    </div>
+                    <div class="project-card" data-modal-id="3">
+                        <img src="photos/img3.jpg" alt="Portfolio 3" class="project-card__image">
+                        <div class="project-card__info">
+                            <h5>Intellectual Property & Digital Responsibility</h5>
+                            <p>August 2023</p>
+                        </div>
+                        <p class="project-card__desc">Capture the legal boundaries of digital creation and the critical need for responsible online communication is a primary objective.</p>
+                        <button class="btn">View</button>
+                    </div>
+                    <div class="project-card" data-modal-id="4">
+                        <img src="photos/img4.jpg" alt="Portfolio 4" class="project-card__image">
+                        <div class="project-card__info">
+                            <h5>IT's Societal Impact & Professionalism</h5>
+                            <p>August 2023</p>
+                        </div>
+                        <p class="project-card__desc">Embody the profound influence of technology on society and the paramount role of ethical IT professionalism is an overarching objective.</p>
+                        <button class="btn">View</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <section class="reflection">
+        <div class="reflection__desc">
+            <h3>Reflection</h3>
+            <p class="summary">Alright, let's cut through the noise and talk about what truly matters: the consequences. If you're building anything worthwhile in this digital age, you're not just writing code; you're etching principles into the fabric of society. This reflection section isn't just a recount; it's a testament to the ethical battlegrounds I've navigated, the hard-won lessons, and the unwavering commitment to a future built on more than just raw power.</p>
+            <p class="full">Alright, let's cut through the noise and talk about what truly matters: the consequences. If you're building anything worthwhile in this digital age, you're not just writing code; you're etching principles into the fabric of society. This reflection section isn't just a recount; it's a testament to the ethical battlegrounds I've navigated, the hard-won lessons, and the unwavering commitment to a future built on more than just raw power.</p>
+            <p class="full">My journey through the ethical landscape of Information Technology has been anything but theoretical. I've wrestled with scenarios that hit close to home, right here in the Philippines, that forced me to confront the real weight of our decisions. Take, for instance, the dilemma of a well-intentioned government initiative to digitize essential services for rural communities. The aim was noble: efficiency, reach. But the proposed system demanded an unprecedented level of personal data – health records, financial details – from citizens with limited digital literacy. The ethical tightrope became evident: how do you balance genuine public service with the inviolable right to informational privacy, especially when the Data Privacy Act stands as a bulwark against misuse? It forced a crucial understanding that consent without true comprehension isn't consent at all, and that even the best intentions can pave a path to unintended digital vulnerabilities. This isn't just about data; it's about dignity.</p>
+            <p class="full">Then there's the emerging frontier, the one that keeps me up at night: the subtle, insidious challenge of algorithmic bias. Imagine a recruitment AI, designed to streamline hiring for critical public sector roles, that inadvertently prioritizes candidates from specific urban areas or educational backgrounds, simply because its training data was skewed. Or consider a predictive analytics system, intended for social welfare distribution, that subtly red-flags individuals based on flawed or incomplete data, inadvertently denying crucial support to those who need it most. These aren't just technical glitches; they are profound ethical failings that perpetuate existing inequalities, undermining the very premise of fair play. The lessons here are stark: competence extends beyond writing clean code; it demands rigorous testing for bias, a deep understanding of societal contexts, and an unyielding commitment to fairness. It's about designing technology that uplifts, not inadvertently marginalizes.</p>
+            <p class="full">Looking ahead, my career as an IT professional will be built on these hard-earned insights. My pledge is to navigate the digital world not just with technical prowess, but with a sharpened ethical compass, informed by the complexities we've dissected. This means confronting dilemmas head-on, like the cybersecurity professional facing immense pressure from a small, local company to conceal a significant data breach to avoid public backlash and financial ruin. My commitment, guided by the Filipino IT Professionals Code of Ethics, is to prioritize transparency, user protection, and the integrity of the system above all else. This isn't about heroism; it's about fundamental responsibility. It's about proactive ethical thinking, advocating for the user, and ensuring that every piece of technology I touch, every system I design, serves humanity responsibly. This is the legacy I aim to build.</p>
+            <div class="reflection__actions">
+                <button class="btn">Learn More</button>
+                <button class="btn btn--secondary">See More</button>
+            </div>
+        </div>
+        <div class="reflection__images">
+            <div data-modal-id="1">
+                <img src="photos/ref 1.jpg" alt="Data Privacy Dilemma">
+                <p>Data Privacy Dilemma</p>
+            </div>
+            <div data-modal-id="2">
+                <img src="photos/ref2.jpg" alt="AI Bias Dilemma">
+                <p>AI Bias Dilemma</p>
+            </div>
+            <div data-modal-id="3">
+                <img src="photos/ref3.jpg" alt="Cybersecurity Ethics Dilemma">
+                <p>Cybersecurity Ethics Dilemma</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3>Introduction</h3>
+                <button class="modal__close">×</button>
+            </div>
+            <div class="modal__summary">
+                <p>A journey into Social and Professional Issues in IT, revealing the ethical and legal stakes behind technology innovation.</p>
+            </div>
+            <div class="modal__full">
+                <p>My exploration of Social and Professional Issues in Information Technology began with skepticism, expecting more theory than practical application, but it quickly became a revelation as I delved into the ethical and legal stakes of innovation; from data privacy challenges like informational privacy and real-world breaches (e.g., COMELEC and PhilHealth in the Philippines) to the legal complexities of Intellectual Property Law and Cyber Libel, I realized this field is an essential roadmap for navigating the digital world responsibly, ensuring technology's power is matched by profound ethical consideration.</p>
+            </div>
+            <div class="modal__wave">
+                <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                    <path d="M0,0 C200,40 400,0 600,40 C800,0 1000,40 1200,0 L1200,60 L0,60 Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="objectives-modal" data-modal-id="1">
+        <div class="objectives-modal__content">
+            <div class="objectives-modal__header">
+                <h3></h3>
+                <button class="objectives-modal__close">×</button>
+            </div>
+            <div class="objectives-modal__body">
+                <img src="" alt="Project Image" class="objectives-modal__image">
+                <div class="objectives-modal__info">
+                    <h3></h3>
+                    <p class="date"></p>
+                    <p></p>
+                </div>
+            </div>
+            <div class="objectives-modal__wave">
+                <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                    <path d="M0,0 C200,40 400,0 600,40 C800,0 1000,40 1200,0 L1200,60 L0,60 Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="reflection-modal">
+        <div class="reflection-modal__content">
+            <div class="reflection-modal__header">
+                <h3>Reflection</h3>
+                <button class="reflection-modal__close">×</button>
+            </div>
+            <div class="reflection-modal__summary">
+                <p>A deep dive into the ethical challenges faced in IT, reflecting on real-world dilemmas and committing to a future of responsible technology.</p>
+            </div>
+            <div class="reflection-modal__full">
+                <p>My journey through the ethical landscape of Information Technology in the Philippines has revealed the profound consequences of our digital decisions, from grappling with the balance between public service and informational privacy in government initiatives—where the Data Privacy Act demands true consent—to confronting the insidious challenge of algorithmic bias in AI systems like recruitment tools that perpetuate inequality if not rigorously tested for fairness, and navigating cybersecurity dilemmas where transparency must trump pressure to conceal breaches, as guided by the Filipino IT Professionals Code of Ethics; these experiences have sharpened my ethical compass, ensuring that every system I design prioritizes user protection, fairness, and responsibility to build a legacy that uplifts society.</p>
+            </div>
+            <div class="reflection-modal__wave">
+                <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                    <path d="M0,0 C200,40 400,0 600,40 C800,0 1000,40 1200,0 L1200,60 L0,60 Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reflection Image Modals -->
+    <div class="reflection-image-modal" data-modal-id="1">
+        <div class="reflection-image-modal__content">
+            <div class="reflection-image-modal__header">
+                <h3>Data Privacy Dilemma</h3>
+                <button class="reflection-image-modal__close">×</button>
+            </div>
+            <div class="reflection-image-modal__body">
+                <img src="photos/ref1.jpg" alt="Data Privacy Dilemma" class="reflection-image-modal__image">
+                <div class="reflection-image-modal__info">
+                    <h3>Data Privacy Reflections</h3>
+                    <p class="date">August 2023</p>
+                    <p data-desc="This image highlights the ethical challenges of balancing public service with the right to informational privacy in digital initiatives.">This image highlights the ethical challenges of balancing public service with the right to informational privacy in digital initiatives.</p>
+                </div>
+            </div>
+            <div class="reflection-image-modal__wave">
+                <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                    <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="reflection-image-modal" data-modal-id="2">
+        <div class="reflection-image-modal__content">
+            <div class="reflection-image-modal__header">
+                <h3>AI Bias Dilemma</h3>
+                <button class="reflection-image-modal__close">×</button>
+            </div>
+            <div class="reflection-image-modal__body">
+                <img src="photos/ref2.jpg" alt="AI Bias Dilemma" class="reflection-image-modal__image">
+                <div class="reflection-image-modal__info">
+                    <h3>AI Bias Reflections</h3>
+                    <p class="date">August 2023</p>
+                    <p data-desc="This image illustrates the risks of algorithmic bias in AI systems, emphasizing the need for fairness and unbiased data training.">This image illustrates the risks of algorithmic bias in AI systems, emphasizing the need for fairness and unbiased data training.</p>
+                </div>
+            </div>
+            <div class="reflection-image-modal__wave">
+                <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                    <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="reflection-image-modal" data-modal-id="3">
+        <div class="reflection-image-modal__content">
+            <div class="reflection-image-modal__header">
+                <h3>Cybersecurity Ethics Dilemma</h3>
+                <button class="reflection-image-modal__close">×</button>
+            </div>
+            <div class="reflection-image-modal__body">
+                <img src="photos/ref3.jpg" alt="Cybersecurity Ethics Dilemma" class="reflection-image-modal__image">
+                <div class="reflection-image-modal__info">
+                    <h3>Cybersecurity Ethics Reflections</h3>
+                    <p class="date">August 2023</p>
+                    <p data-desc="This image depicts the ethical conflict faced by cybersecurity professionals when pressured to conceal data breaches.">This image depicts the ethical conflict faced by cybersecurity professionals when pressured to conceal data breaches.</p>
+                </div>
+            </div>
+            <div class="reflection-image-modal__wave">
+                <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                    <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    
+
+<section class="case-study">
+    <div class="case-study__header">
+        <h3>Case Study Analysis</h3>
+        <button class="btn btn--secondary">Explore All Cases</button>
+    </div>
+    <div class="case-study__desc">
+        <p class="summary">Dive into a real-world exploration of IT ethics through the lens of the Facebook-Cambridge Analytica data breach, a pivotal incident that exposed critical vulnerabilities in data privacy and ethical responsibility, particularly impacting Filipino users. This section unpacks the ethical dilemmas, applies theoretical frameworks, and proposes actionable solutions grounded in professional standards.</p>
+        <p class="full">Here is a case study analysis based on a real-world incident related to IT ethics in the Philippines, drawing upon the concepts and theories discussed in the provided sources. Please note that the specific details of the incident itself are not found within the given sources, but the ethical framework for analysis is derived from them.</p>
+        <p class="full"><strong>Case Study Analysis: The Facebook-Cambridge Analytica Data Breach and Filipino Users</strong></p>
+        <p class="full"><strong>Incident Summary:</strong> A significant real-world incident that highlighted crucial IT ethical issues in the Philippines was related to the Facebook-Cambridge Analytica data scandal in 2018. This incident, while global in scale, heavily impacted users in the Philippines, revealing vulnerabilities in data privacy and the ethical responsibilities of technology companies. The core of the scandal involved the unauthorized access and collection of personal data from millions of Facebook users, including a considerable number of Filipinos, by a political consulting firm, Cambridge Analytica. The data was reportedly harvested through a third-party application, a personality quiz, that collected not only data from users who directly engaged with the app but also, controversially, from their friends list without explicit consent. This collected data was allegedly used for targeted political advertising and profiling.</p>
+        <div class="case-study__actions">
+            <button class="btn">Learn More</button>
+            <button class="btn btn--secondary">See More</button>
+        </div>
+    </div>
+    <div class="case-study__cards">
+        <div class="case-study-card" data-modal-id="case1">
+            <div class="case-study-card__image-wrapper">
+                <img src="photos/cs1.jpg" alt="Data Privacy Breach" class="case-study-card__image">
+                <div class="case-study-card__overlay">
+                    <i class="ri-eye-line"></i>
+                </div>
+            </div>
+            <div class="case-study-card__info">
+                <h5>Ethical Issues</h5>
+                <p>August 2023</p>
+                <p class="case-study-card__desc">Unveiling the critical ethical issues of the breach, including informational privacy violations, lack of consent, and deception.</p>
+            </div>
+            <button class="btn">View Analysis</button>
+        </div>
+        <div class="case-study-card" data-modal-id="case2">
+            <div class="case-study-card__image-wrapper">
+                <img src="photos/cs2.jpg" alt="Ethical Theories" class="case-study-card__image">
+                <div class="case-study-card__overlay">
+                    <i class="ri-eye-line"></i>
+                </div>
+            </div>
+            <div class="case-study-card__info">
+                <h5>Ethical Theories</h5>
+                <p>August 2023</p>
+                <p class="case-study-card__desc">Applying Kantianism, Consequentialism, and other frameworks to dissect the moral implications of the breach.</p>
+            </div>
+            <button class="btn">View Analysis</button>
+        </div>
+        <div class="case-study-card" data-modal-id="case3">
+            <div class="case-study-card__image-wrapper">
+                <img src="photos/cs11.jpg" alt="Proposed Solutions" class="case-study-card__image">
+                <div class="case-study-card__overlay">
+                    <i class="ri-eye-line"></i>
+                </div>
+            </div>
+            <div class="case-study-card__info">
+                <h5>Proposed Solutions</h5>
+                <p>August 2023</p>
+                <p class="case-study-card__desc">Crafting solutions like enhanced consent and transparency to prevent future data privacy violations & possible intrusions.</p>
+            </div>
+            <button class="btn">View Analysis</button>
+        </div>
+    </div>
+</section>
+
+<!-- Case Study Modal -->
+<div class="case-study-modal">
+    <div class="case-study-modal__content">
+        <div class="case-study-modal__header">
+            <h3>Case Study Analysis</h3>
+            <button class="case-study-modal__close">×</button>
+        </div>
+        <div class="case-study-modal__summary">
+            <p>An in-depth analysis of the Facebook-Cambridge Analytica data breach, exploring ethical issues, applying theoretical frameworks, and proposing solutions grounded in IT ethics and the Data Privacy Act.</p>
+        </div>
+        <div class="case-study-modal__full">
+            <p><strong>Incident Summary:</strong> The Facebook-Cambridge Analytica data scandal of 2018 was a pivotal incident that exposed vulnerabilities in data privacy, particularly impacting Filipino users. Unauthorized data collection via a third-party app violated informational privacy, obscured consent, and eroded trust. The data was used for targeted political advertising, raising significant ethical concerns.</p>
+            <p><strong>Ethical Issues Identified:</strong></p>
+            <ul>
+                <li><strong>Breach of Informational Privacy:</strong> Unauthorized collection and processing of personal data violated the right to control one's information.</li>
+                <li><strong>Lack of Valid Consent:</strong> Data was processed without freely given, specific, informed consent, violating the Data Privacy Act's principles.</li>
+                <li><strong>Violation of Trust and Professional Responsibility:</strong> Both Facebook and Cambridge Analytica failed to uphold moral responsibilities to protect user data.</li>
+                <li><strong>Misrepresentation and Deception:</strong> The purpose of data collection was obscured, bordering on deception.</li>
+            </ul>
+            <p><strong>Proposed Solutions:</strong></p>
+            <ul>
+                <li><strong>Strengthened Consent Mechanisms:</strong> Implement clear, granular consent options to empower users.</li>
+                <li><strong>Enhanced Transparency:</strong> Ensure users can access, rectify, or erase their data.</li>
+                <li><strong>Stricter Third-Party Controls:</strong> Vet app developers and monitor data access.</li>
+                <li><strong>Data Minimization:</strong> Collect only necessary data for legitimate purposes.</li>
+                <li><strong>Robust Security:</strong> Implement safeguards and prompt breach notifications.</li>
+                <li><strong>Professional Ethics:</strong> Adhere to codes ensuring responsible data handling.</li>
+            </ul>
+        </div>
+        <div class="case-study-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<!-- Case Study Card Modals -->
+<div class="case-study-card-modal" data-modal-id="case1">
+    <div class="case-study-card-modal__content">
+        <div class="case-study-card-modal__header">
+            <h3>Ethical Issues</h3>
+            <button class="case-study-card-modal__close">×</button>
+        </div>
+        <div class="case-study-card-modal__body">
+            <img src="photos/case1.jpg" alt="Ethical Issues" class="case-study-card-modal__image">
+            <div class="case-study-card-modal__info">
+                <h3>Ethical Issues Analysis</h3>
+                <p class="date">August 2023</p>
+                <p data-desc="This analysis highlights the critical ethical issues of the Facebook-Cambridge Analytica breach, including the violation of informational privacy through unauthorized data collection, lack of valid consent under the Data Privacy Act, violation of trust and professional responsibility by Facebook and Cambridge Analytica, and misrepresentation bordering on deception regarding data use purposes.">This analysis highlights the critical ethical issues of the Facebook-Cambridge Analytica breach, including the violation of informational privacy through unauthorized data collection, lack of valid consent under the Data Privacy Act, violation of trust and professional responsibility by Facebook and Cambridge Analytica, and misrepresentation bordering on deception regarding data use purposes.</p>
+            </div>
+        </div>
+        <div class="case-study-card-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="case-study-card-modal" data-modal-id="case2">
+    <div class="case-study-card-modal__content">
+        <div class="case-study-card-modal__header">
+            <h3>Ethical Theories</h3>
+            <button class="case-study-card-modal__close">×</button>
+        </div>
+        <div class="case-study-card-modal__body">
+            <img src="photos/case2.jpg" alt="Ethical Theories" class="case-study-card-modal__image">
+            <div class="case-study-card-modal__info">
+                <h3>Ethical Theories Analysis</h3>
+                <p class="date">August 2023</p>
+                <p data-desc="This analysis applies ethical theories to the Cambridge Analytica breach: Kantianism views the actions as treating users as means to an end; Consequentialism highlights negative outcomes like loss of trust and democratic manipulation; Virtue Ethics notes a lack of honesty and responsibility; Contractarianism sees a breach of the implicit social contract; and Care Ethics points to a failure to prioritize user well-being.">This analysis applies ethical theories to the Cambridge Analytica breach: Kantianism views the actions as treating users as means to an end; Consequentialism highlights negative outcomes like loss of trust and democratic manipulation; Virtue Ethics notes a lack of honesty and responsibility; Contractarianism sees a breach of the implicit social contract; and Care Ethics points to a failure to prioritize user well-being.</p>
+            </div>
+        </div>
+        <div class="case-study-card-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="case-study-card-modal" data-modal-id="case3">
+    <div class="case-study-card-modal__content">
+        <div class="case-study-card-modal__header">
+            <h3>Proposed Solutions</h3>
+            <button class="case-study-card-modal__close">×</button>
+        </div>
+        <div class="case-study-card-modal__body">
+            <img src="photos/case3.jpg" alt="Proposed Solutions" class="case-study-card-modal__image">
+            <div class="case-study-card-modal__info">
+                <h3>Solutions Analysis</h3>
+                <p class="date">August 2023</p>
+                <p data-desc="Proposed solutions include strengthened consent mechanisms, enhanced transparency, stricter third-party access controls, data minimization, robust security measures, and adherence to professional codes of ethics, all grounded in the Data Privacy Act to prevent future breaches and restore trust in digital platforms.">Proposed solutions include strengthened consent mechanisms, enhanced transparency, stricter third-party access controls, data minimization, robust security measures, and adherence to professional codes of ethics, all grounded in the Data Privacy Act to prevent future breaches and restore trust in digital platforms.</p>
+            </div>
+        </div>
+        <div class="case-study-card-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<section class="visuals">
+    <div class="visuals__header">
+        <h3>Visuals of the Dilemma</h3>
+        <p>Explore key moments and concepts of the Facebook-Cambridge Analytica data breach through these curated images, each highlighting a facet of the ethical and privacy issues faced by Filipino users.</p>
+    </div>
+    <div class="visuals__container">
+        <div class="visuals__item" data-modal-id="visual1">
+            <div class="visuals__image-wrapper visuals__image-wrapper--blue">
+                <img src="photos/v1.jpg" alt="Unauthorized Data Collection" class="visuals__image">
+                <div class="visuals__overlay">
+                    <i class="ri-eye-line"></i>
+                </div>
+            </div>
+            <div class="visuals__info">
+                <h5>Unauthorized Data Collection</h5>
+                <p>A depiction of how personal data was harvested without consent via a third-party app.</p>
+            </div>
+        </div>
+        <div class="visuals__item" data-modal-id="visual2">
+            <div class="visuals__image-wrapper visuals__image-wrapper--purple">
+                <img src="photos/v2.jpg" alt="Political Profiling" class="visuals__image">
+                <div class="visuals__overlay">
+                    <i class="ri-eye-line"></i>
+                </div>
+            </div>
+            <div class="visuals__info">
+                <h5>Political Profiling</h5>
+                <p>Illustrating the use of harvested data for targeted political advertising.</p>
+            </div>
+        </div>
+        <div class="visuals__item" data-modal-id="visual3">
+            <div class="visuals__image-wrapper visuals__image-wrapper--green">
+                <img src="photos/v3.png" alt="Privacy Violation" class="visuals__image">
+                <div class="visuals__overlay">
+                    <i class="ri-eye-line"></i>
+                </div>
+            </div>
+            <div class="visuals__info">
+                <h5>Privacy Violation</h5>
+                <p>Visualizing the breach of informational privacy affecting Filipino users.</p>
+            </div>
+        </div>
+        <div class="visuals__item" data-modal-id="visual4">
+            <div class="visuals__image-wrapper visuals__image-wrapper--orange">
+                <img src="photos/v4.png" alt="Erosion of Trust" class="visuals__image">
+                <div class="visuals__overlay">
+                    <i class="ri-eye-line"></i>
+                </div>
+            </div>
+            <div class="visuals__info">
+                <h5>Erosion of Trust</h5>
+                <p>Representing the loss of public trust in social media platforms post-scandal.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Visuals Modals -->
+<div class="visuals-modal" data-modal-id="visual1">
+    <div class="visuals-modal__content">
+        <div class="visuals-modal__header">
+            <h3>Unauthorized Data Collection</h3>
+            <button class="visuals-modal__close">×</button>
+        </div>
+        <div class="visuals-modal__body">
+            <img src="photos/v1.jpg" alt="Unauthorized Data Collection" class="visuals-modal__image">
+            <div class="visuals-modal__info">
+                <h4>Unauthorized Data Collection</h4>
+                <p>This image depicts the mechanism by which Cambridge Analytica harvested personal data from Filipino Facebook users through a third-party personality quiz app in 2018. Without explicit consent, the app collected not only the data of users who participated but also their friends' data, violating informational privacy and highlighting the ethical lapse in data handling practices.</p>
+            </div>
+        </div>
+        <div class="visuals-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="visuals-modal" data-modal-id="visual2">
+    <div class="visuals-modal__content">
+        <div class="visuals-modal__header">
+            <h3>Political Profiling</h3>
+            <button class="visuals-modal__close">×</button>
+        </div>
+        <div class="visuals-modal__body">
+            <img src="photos/visual2.jpg" alt="Political Profiling" class="visuals-modal__image">
+            <div class="visuals-modal__info">
+                <h4>Political Profiling</h4>
+                <p>This visual illustrates how the data collected by Cambridge Analytica was used for targeted political advertising and voter profiling during the 2018 scandal. By analyzing user data, the firm created detailed profiles to influence political campaigns, raising ethical concerns about manipulation and the misuse of personal information from Filipino users.</p>
+            </div>
+        </div>
+        <div class="visuals-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="visuals-modal" data-modal-id="visual3">
+    <div class="visuals-modal__content">
+        <div class="visuals-modal__header">
+            <h3>Privacy Violation</h3>
+            <button class="visuals-modal__close">×</button>
+        </div>
+        <div class="visuals-modal__body">
+            <img src="photos/visual3.jpg" alt="Privacy Violation" class="visuals-modal__image">
+            <div class="visuals-modal__info">
+                <h4>Privacy Violation</h4>
+                <p>This image captures the essence of the informational privacy breach caused by the Facebook-Cambridge Analytica scandal. It symbolizes how Filipino users' personal data was exposed without their knowledge, undermining their right to control their information and highlighting the ethical responsibility of tech platforms to protect user privacy.</p>
+            </div>
+        </div>
+        <div class="visuals-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="visuals-modal" data-modal-id="visual4">
+    <div class="visuals-modal__content">
+        <div class="visuals-modal__header">
+            <h3>Erosion of Trust</h3>
+            <button class="visuals-modal__close">×</button>
+        </div>
+        <div class="visuals-modal__body">
+            <img src="photos/visual4.jpg" alt="Erosion of Trust" class="visuals-modal__image">
+            <div class="visuals-modal__info">
+                <h4>Erosion of Trust</h4>
+                <p>This visual represents the significant loss of public trust in social media platforms following the Cambridge Analytica scandal. For Filipino users, the breach eroded confidence in Facebook’s ability to safeguard their data, emphasizing the need for transparency and ethical practices to rebuild trust in digital ecosystems.</p>
+            </div>
+        </div>
+        <div class="visuals-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+<!-- END OF THE VISUALS -->
+
+
+
+<!-- ETHICS PLEDGE -->
+<section class="ethics-pledge">
+    <div class="ethics-pledge__header">
+        <h3>My Professional Ethics Pledge</h3>
+        <p>A solemn commitment to uphold the highest standards of integrity, responsibility, and inclusivity in shaping the digital future.</p>
+        <div class="ethics-pledge__seal">
+            <svg viewBox="0 0 100 100" class="seal-icon">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#1e3a8a" stroke-width="4"/>
+                <path d="M50 30 L60 45 L50 60 L40 45 Z" fill="none" stroke="#3b82f6" stroke-width="3"/>
+                <circle cx="50" cy="50" r="10" fill="#3b82f6"/>
+            </svg>
+        </div>
+    </div>
+    <div class="ethics-pledge__cards">
+        <div class="ethics-pledge__card" data-pledge-id="pledge1">
+            <div class="ethics-pledge__card-inner">
+                <div class="ethics-pledge__card-front">
+                    <h4>Digital Privacy</h4>
+                    <p>I pledge to safeguard the digital privacy of every individual with the same vigilance I would my own.</p>
+                </div>
+                <div class="ethics-pledge__card-back">
+                    <h4>Significance</h4>
+                    <p>Because I've seen firsthand how easily trust can be fractured, how quickly personal data can become a weapon. The right to control one's digital self isn't a privilege; it's fundamental. If we, the architects of this digital age, don't stand as its guardians, then who will?</p>
+                </div>
+            </div>
+        </div>
+        <div class="ethics-pledge__card" data-pledge-id="pledge2">
+            <div class="ethics-pledge__card-inner">
+                <div class="ethics-pledge__card-front">
+                    <h4>Integrity & Transparency</h4>
+                    <p>I commit to unwavering integrity and transparency in all technological endeavors.</p>
+                </div>
+                <div class="ethics-pledge__card-back">
+                    <h4>Significance</h4>
+                    <p>In a field where complexities can obscure truths, honesty is the ultimate currency. There's no room for hidden agendas or obscured facts. Every decision, every system, must be built on a foundation of clarity, because confidence in technology hinges on confidence in those who create it.</p>
+                </div>
+            </div>
+        </div>
+        <div class="ethics-pledge__card" data-pledge-id="pledge3">
+            <div class="ethics-pledge__card-inner">
+                <div class="ethics-pledge__card-front">
+                    <h4>Societal Impact</h4>
+                    <p>I vow to consider the full societal impact of every innovation, from concept to deployment.</p>
+                </div>
+                <div class="ethics-pledge__card-back">
+                    <h4>Significance</h4>
+                    <p>It's no longer enough to ask if we can build something; the essential question is always, should we? We wield immense power. My responsibility extends beyond functionality; it's about anticipating consequences, mitigating harm, and ensuring our creations genuinely elevate humanity, not just entertain or enrich a few.</p>
+                </div>
+            </div>
+        </div>
+        <div class="ethics-pledge__card" data-pledge-id="pledge4">
+            <div class="ethics-pledge__card-inner">
+                <div class="ethics-pledge__card-front">
+                    <h4>Continuous Learning</h4>
+                    <p>I promise to pursue continuous learning and mastery, upholding the highest standards of competence.</p>
+                </div>
+                <div class="ethics-pledge__card-back">
+                    <h4>Significance</h4>
+                    <p>This field doesn't wait. Mediocrity isn't just a personal failing; it's a systemic risk. To be truly effective, to lead, to protect, one must always be at the forefront, pushing personal boundaries, understanding the next big thing before it even hits the radar. This isn't just a job; it's a constant evolution.</p>
+                </div>
+            </div>
+        </div>
+        <div class="ethics-pledge__card" data-pledge-id="pledge5">
+            <div class="ethics-pledge__card-inner">
+                <div class="ethics-pledge__card-front">
+                    <h4>Inclusion & Accessibility</h4>
+                    <p>I shall strive to ensure that technology is a force for inclusion, accessible to all, not a barrier.</p>
+                </div>
+                <div class="ethics-pledge__card-back">
+                    <h4>Significance</h4>
+                    <p>The true power of innovation lies in its reach. If what we build only serves a select few, then we’ve failed the larger mission. Every solution must be designed with the understanding that its impact should be equitable, bridging divides, not widening them. Everyone deserves a seat at the digital table.</p>
+                </div>
+            </div>
+        </div>
+        <div class="ethics-pledge__card" data-pledge-id="pledge6">
+            <div class="ethics-pledge__card-inner">
+                <div class="ethics-pledge__card-front">
+                    <h4>Accountability</h4>
+                    <p>I accept full accountability for the ethical consequences of my professional work.</p>
+                </div>
+                <div class="ethics-pledge__card-back">
+                    <h4>Significance</h4>
+                    <p>In the end, the buck stops with us. When lines are crossed, when unintended damage occurs, or when ethical compromises are made, dodging responsibility is not an option. It's about owning the outcome, learning from it, and ensuring it never happens again. Because that's what true leadership looks like.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ethics-pledge__icons">
+        <div class="ethics-pledge__icon" data-modal-id="icon1">
+            <i class="ri-shield-keyhole-line"></i>
+            <p>Digital Privacy</p>
+        </div>
+        <div class="ethics-pledge__icon" data-modal-id="icon2">
+            <i class="ri-eye-line"></i>
+            <p>Integrity</p>
+        </div>
+        <div class="ethics-pledge__icon" data-modal-id="icon3">
+            <i class="ri-global-line"></i>
+            <p>Societal Impact</p>
+        </div>
+        <div class="ethics-pledge__icon" data-modal-id="icon4">
+            <i class="ri-book-open-line"></i>
+            <p>Learning</p>
+        </div>
+        <div class="ethics-pledge__icon" data-modal-id="icon5">
+            <i class="ri-group-line"></i>
+            <p>Inclusion</p>
+        </div>
+        <div class="ethics-pledge__icon" data-modal-id="icon6">
+            <i class="ri-hand-heart-line"></i>
+            <p>Accountability</p>
+        </div>
+    </div>
+</section>
+
+<!-- Ethics Pledge Modals -->
+<div class="ethics-pledge-modal" data-modal-id="icon1">
+    <div class="ethics-pledge-modal__content">
+        <div class="ethics-pledge-modal__header">
+            <h3>Digital Privacy</h3>
+            <button class="ethics-pledge-modal__close">×</button>
+        </div>
+        <div class="ethics-pledge-modal__body">
+            <i class="ri-shield-keyhole-line ethics-pledge-modal__icon"></i>
+            <div class="ethics-pledge-modal__info">
+                <h4>Pledge</h4>
+                <p>I pledge to safeguard the digital privacy of every individual with the same vigilance I would my own.</p>
+                <h4>Significance</h4>
+                <p>Because I've seen firsthand how easily trust can be fractured, how quickly personal data can become a weapon. The right to control one's digital self isn't a privilege; it's fundamental. If we, the architects of this digital age, don't stand as its guardians, then who will?</p>
+            </div>
+        </div>
+        <div class="ethics-pledge-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="ethics-pledge-modal" data-modal-id="icon2">
+    <div class="ethics-pledge-modal__content">
+        <div class="ethics-pledge-modal__header">
+            <h3>Integrity & Transparency</h3>
+            <button class="ethics-pledge-modal__close">×</button>
+        </div>
+        <div class="ethics-pledge-modal__body">
+            <i class="ri-eye-line ethics-pledge-modal__icon"></i>
+            <div class="ethics-pledge-modal__info">
+                <h4>Pledge</h4>
+                <p>I commit to unwavering integrity and transparency in all technological endeavors.</p>
+                <h4>Significance</h4>
+                <p>In a field where complexities can obscure truths, honesty is the ultimate currency. There's no room for hidden agendas or obscured facts. Every decision, every system, must be built on a foundation of clarity, because confidence in technology hinges on confidence in those who create it.</p>
+            </div>
+        </div>
+        <div class="ethics-pledge-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="ethics-pledge-modal" data-modal-id="icon3">
+    <div class="ethics-pledge-modal__content">
+        <div class="ethics-pledge-modal__header">
+            <h3>Societal Impact</h3>
+            <button class="ethics-pledge-modal__close">×</button>
+        </div>
+        <div class="ethics-pledge-modal__body">
+            <i class="ri-global-line ethics-pledge-modal__icon"></i>
+            <div class="ethics-pledge-modal__info">
+                <h4>Pledge</h4>
+                <p>I vow to consider the full societal impact of every innovation, from concept to deployment.</p>
+                <h4>Significance</h4>
+                <p>It's no longer enough to ask if we can build something; the essential question is always, should we? We wield immense power. My responsibility extends beyond functionality; it's about anticipating consequences, mitigating harm, and ensuring our creations genuinely elevate humanity, not just entertain or enrich a few.</p>
+            </div>
+        </div>
+        <div class="ethics-pledge-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="ethics-pledge-modal" data-modal-id="icon4">
+    <div class="ethics-pledge-modal__content">
+        <div class="ethics-pledge-modal__header">
+            <h3>Continuous Learning</h3>
+            <button class="ethics-pledge-modal__close">×</button>
+        </div>
+        <div class="ethics-pledge-modal__body">
+            <i class="ri-book-open-line ethics-pledge-modal__icon"></i>
+            <div class="ethics-pledge-modal__info">
+                <h4>Pledge</h4>
+                <p>I promise to pursue continuous learning and mastery, upholding the highest standards of competence.</p>
+                <h4>Significance</h4>
+                <p>This field doesn't wait. Mediocrity isn't just a personal failing; it's a systemic risk. To be truly effective, to lead, to protect, one must always be at the forefront, pushing personal boundaries, understanding the next big thing before it even hits the radar. This isn't just a job; it's a constant evolution.</p>
+            </div>
+        </div>
+        <div class="ethics-pledge-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="ethics-pledge-modal" data-modal-id="icon5">
+    <div class="ethics-pledge-modal__content">
+        <div class="ethics-pledge-modal__header">
+            <h3>Inclusion & Accessibility</h3>
+            <button class="ethics-pledge-modal__close">×</button>
+        </div>
+        <div class="ethics-pledge-modal__body">
+            <i class="ri-group-line ethics-pledge-modal__icon"></i>
+            <div class="ethics-pledge-modal__info">
+                <h4>Pledge</h4>
+                <p>I shall strive to ensure that technology is a force for inclusion, accessible to all, not a barrier.</p>
+                <h4>Significance</h4>
+                <p>The true power of innovation lies in its reach. If what we build only serves a select few, then we’ve failed the larger mission. Every solution must be designed with the understanding that its impact should be equitable, bridging divides, not widening them. Everyone deserves a seat at the digital table.</p>
+            </div>
+        </div>
+        <div class="ethics-pledge-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div class="ethics-pledge-modal" data-modal-id="icon6">
+    <div class="ethics-pledge-modal__content">
+        <div class="ethics-pledge-modal__header">
+            <h3>Accountability</h3>
+            <button class="ethics-pledge-modal__close">×</button>
+        </div>
+        <div class="ethics-pledge-modal__body">
+            <i class="ri-hand-heart-line ethics-pledge-modal__icon"></i>
+            <div class="ethics-pledge-modal__info">
+                <h4>Pledge</h4>
+                <p>I accept full accountability for the ethical consequences of my professional work.</p>
+                <h4>Significance</h4>
+                <p>In the end, the buck stops with us. When lines are crossed, when unintended damage occurs, or when ethical compromises are made, dodging responsibility is not an option. It's about owning the outcome, learning from it, and ensuring it never happens again. Because that's what true leadership looks like.</p>
+            </div>
+        </div>
+        <div class="ethics-pledge-modal__wave">
+            <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                <path d="M0,0 C200,40 400,-40 600,40 C800,-40 1000,40 1200,0 L1200,60 L0,60 Z"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+   
+<!-- ENDING PART-->
+    <section class="career">
+        <div class="career__jobs">
+            <h3>Ethical & Professional Praxis</h3>
+            <div class="job">
+                <i class="ri-pen-nib-line"></i>
+                <div class="job__info">
+                    <h5>Applied Ethical Frameworks Developer</h5>
+                    <p>Integrating ethical theories (Kantianism, Consequentialism) into SDLC.</p>
+                </div>
+            </div>
+            <div class="job">
+                <i class="ri-reactjs-fill"></i>
+                <div class="job__info">
+                    <h5>Data Privacy & Legal Compliance Architect</h5>
+                    <p>Implementing Data Privacy Act (RA 10173) compliance.</p>
+                </div>
+            </div>
+            <div class="job">
+                <i class="ri-paint-brush-line"></i>
+                <div class="job__info">
+                    <h5>Societal Impact & Inclusive Design Lead</h5>
+                    <p>Ensuring tech promotes inclusion and mitigates harm.</p>
+                </div>
+            </div>
+        </div>
+        <div class="career__awards">
+            <h3>Core Portfolio Insights</h3>
+            <div class="award">
+                <div>
+                    <i class="ri-medal-fill"></i>
+                    <div class="award__info">
+                        <h5>Foundational Grasp of IT Ethics & Law</h5>
+                        <p>From abstract theory to personal conviction; navigating legal ramifications.</p>
+                    </div>
+                </div>
+                <a href="#"><i class="ri-external-link-line"></i></a>
+            </div>
+            <div class="award">
+                <div>
+                    <i class="ri-javascript-line"></i>
+                    <div class="award__info">
+                        <h5>Practical Application & Critical Case Analysis</span></h5>
+                        <p>Applying ethical theories to practical challenges; proposing robust solutions.</p>
+                    </div>
+                </div>
+                <a href="#"><i class="ri-external-link-line"></i></a>
+            </div>
+            <div class="award">
+                <div>
+                    <i class="ri-award-fill"></i>
+                    <div class="award__info">
+                        <h5>Unwavering Professional Ethics Pledge</h5>
+                        <p>Building with conscience; a blueprint for responsible innovation.</p>
+                    </div>
+                </div>
+                <a href="#"><i class="ri-external-link-line"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <h5>Got a Projects?</h5>
+        <h2>Let's Work Together!</h2>
+        <button class="btn">Send Message</button>
+        <p>Phone: <span>+11111111111</span></p>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__brand">
+            <a href="#">Logo.</a>
+            <p>© 2024 AsmrProg YouTube Channel.</p>
+        </div>
+        <div class="footer__links">
+            <a href="#">Home</a>
+            <a href="#">Projects</a>
+            <a href="#">Skills</a>
+            <a href="#">About</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>
